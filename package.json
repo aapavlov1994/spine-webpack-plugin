@@ -1,10 +1,10 @@
 {
   "name": "spine-webpack-plugin",
   "version": "0.1.0",
-  "author": "Anton Pavlov <aapavlov199@gmail.com>",
+  "author": "Anton Pavlov <aapavlov1994@gmail.com>",
   "license": "MIT",
   "keywords": [
-    "webpack5",
+    "webpack",
     "loader",
     "plugin",
     "spine",

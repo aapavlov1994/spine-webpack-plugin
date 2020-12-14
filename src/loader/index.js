@@ -6,8 +6,17 @@ const { pluginName } = require('../consts');
 function spineLoader(buffer) {
   const spineConfig = JSON.parse(buffer);
 
+  const getOptionByName = (name) => (
+    (this.getOptions && this.getOptions()[name])
+    || (typeof this.resourceQuery === 'string'
+      && this.resourceQuery !== ''
+      && JSON.parse(this.resourceQuery.replace(/^\?/, ''))[name])
+    || (typeof this.query === 'object' && this.query[name]) // webpack4
+  )
+
   // clean unused animations
-  const { animations: optAnims, scale } = this.getOptions();
+  const optAnims = getOptionByName('animations');
+  const scale = getOptionByName('scale');
   if (optAnims) {
     const usedEvents = new Set();
     Object.keys(spineConfig.animations).forEach((key) => {

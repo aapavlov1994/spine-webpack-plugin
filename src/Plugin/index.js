@@ -39,10 +39,10 @@ module.exports = class SpineSpriteMapWebpackPlugin {
     });
   }
 
-  genSpriteFor(hash, assets) {
+  genSpriteFor(hash, scale, assets) {
     if (!this.spritesHashes.has(hash)) this.spritesHashes.set(hash, this.spritesHashes.size + 1);
     return new Promise((resolve) => {
-      getScaledImagesAsBuffer(assets, 0.5).then((result) => {
+      getScaledImagesAsBuffer(assets, scale).then((result) => {
         Spritesmith.run({ src: result }, (err, output) => {
           const postfix = this.spritesHashes.get(hash);
           const spritePath = path.join(this.cacheCompilerDir, `sprite${postfix}.png`);

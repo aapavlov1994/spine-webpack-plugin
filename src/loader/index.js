@@ -41,7 +41,7 @@ function spineLoader(buffer) {
         });
       });
     });
-    this[pluginName].genSpriteFor(spineConfig.skeleton.hash, assets)
+    this[pluginName].genSpriteFor(spineConfig.skeleton.hash, scale, assets)
       .then((result) => {
         const { map, sprite } = result;
         // gen output module

@@ -18,7 +18,7 @@ rules.push({
   loader: spineLoaderPath,
 });
 ```
-A typical file with animations should look like:
+A typical structure of file with animations should look like (separate assets in "images" dir):
 
 ![img.png](readme_assets/anim_file.png)
 

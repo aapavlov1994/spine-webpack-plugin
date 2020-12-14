@@ -1,7 +1,8 @@
 # spine-webpack-plugin
 Webpack Plugin and Loader for resolving spine-animations.
 
-###Usage
+### Usage
+
 `npm i spine-webpack-plugin --save-dev`
 ```javascript
 const {
@@ -18,9 +19,10 @@ rules.push({
 });
 ```
 A typical file with animations should look like:
+
 ![img.png](readme_assets/anim_file.png)
 
-###Settings of loader
+### Settings of loader
 
 You no need to configure your plugin.
 You will need to set options for your loader only.
@@ -47,7 +49,7 @@ const config3 = require('@/assets/spine/Galahad/Galahad_usual_3.json'
   + '?{ "scale": 0.7 }');
  ```
 
-###Output
+### Output
 You also can find sprite with map in your cache dir.
 ```javascript
 config.skeleton.sprite.src // path to created sprite

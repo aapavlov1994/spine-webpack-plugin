@@ -1,46 +1,23 @@
-const path = require('path');
-
+const getOptions = require('./getOptions');
+const getUsedAssets = require('./getUsedAssets');
+const cleanUnusedProps = require('./cleanUnusedProps');
 const { pluginName } = require('../consts');
 
 // eslint-disable-next-line consistent-return
 function spineLoader(buffer) {
   const spineConfig = JSON.parse(buffer);
+  const {
+    animations: usedAnims,
+    skins: usedSkins,
+    scale,
+  } = getOptions.call(this);
 
-  const getOptionByName = (name) => (
-    (this.getOptions && this.getOptions()[name])
-    || (typeof this.resourceQuery === 'string'
-      && this.resourceQuery !== ''
-      && JSON.parse(this.resourceQuery.replace(/^\?/, ''))[name])
-    || (typeof this.query === 'object' && this.query[name]) // webpack4
-  )
+  cleanUnusedProps(spineConfig, usedAnims);
 
-  // clean unused animations
-  const optAnims = getOptionByName('animations');
-  const scale = getOptionByName('scale');
-  if (optAnims) {
-    const usedEvents = new Set();
-    Object.keys(spineConfig.animations).forEach((key) => {
-      if (!optAnims.includes(key)) delete spineConfig.animations[key];
-      else spineConfig.animations[key].events.forEach(({ name }) => { usedEvents.add(name); });
-    });
-    // clean unused events
-    Object.keys(spineConfig.events).forEach((key) => {
-      if (!usedEvents.has(key)) delete spineConfig.events[key];
-    });
-  }
-
-  if (scale) { // if scale => add assets to dependencies and output json
+  if (scale) { // if scale => make sprite from used scaled assets
     const done = this.async();
-    // get uniq used assets names
-    const assets = {};
-    spineConfig.skins.forEach((skin) => {
-      Object.keys(skin.attachments).forEach((attachmentName) => {
-        Object.keys(skin.attachments[attachmentName]).forEach((imageName) => {
-          const newName = `${imageName}.png`;
-          assets[newName] = path.resolve(this.resourcePath, '../images', newName);
-        });
-      });
-    });
+    if (usedSkins && !usedSkins.includes('default')) usedSkins.unshift('default');
+    const assets = getUsedAssets.call(this, spineConfig, usedSkins);
     this[pluginName].genSpriteFor(spineConfig.skeleton.hash, scale, assets)
       .then((result) => {
         const { map, sprite } = result;

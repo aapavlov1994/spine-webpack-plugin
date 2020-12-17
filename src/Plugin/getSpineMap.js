@@ -16,7 +16,7 @@ module.exports = function getSpineMap(object) {
       height,
     } = object.coordinates[key];
     output.push(
-      `${key.slice(0, -4)}`,
+      `${key.slice(0, -4).replace(/\\/, '/')}`,
       '  rotate: false',
       `  xy: ${x}, ${y}`,
       `  size: ${width}, ${height}`,

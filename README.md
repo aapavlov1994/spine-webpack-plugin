@@ -1,6 +1,6 @@
 # spine-webpack-plugin
 Webpack Plugin and Loader for resolving spine-animations,
-scale their assets and creating sprites.
+scale their assets and creating sprites. Works with skins.
 
 ### Usage
 
@@ -19,9 +19,10 @@ rules.push({
   loader: spineLoaderPath,
 });
 ```
-A typical structure of file with animations should look like (separate assets in "images" dir):
+A typical structure of file with animations should
+look like (separate assets in "images" subdirs):
 
-![img.png](readme_assets/anim_file.png)
+![img.png](readme_assets/structure.png)
 
 ### Settings of loader
 
@@ -31,23 +32,31 @@ The best way to do that - using inline options.
 
 Set scale option. This allows you to resolve skeleton, his assets,
 scale them and final animation. 
-Also you can set list of required animtaions.
+Also, you can set list of required animations.
 ```javascript
-const config = require('@/assets/spine/Galahad/usual.json'
+const config = require('@/assets/spine/goblin/usual.json'
   + '?{"scale": 0.25, "animations": ["ATTACK", "RUN"] }');
 ```
 
 Without scale option
 you will resolve animations objects only.
 ```javascript
-const config2 = require('@/assets/spine/Galahad/champion.json'
+const config2 = require('@/assets/spine/goblin/champion.json'
   + '?{ "animations": ["JUMP"] }');
  ```
 
 This "require" will resolve all animations from config:
 ```javascript
-const config3 = require('@/assets/spine/Galahad/evil.json'
+const config3 = require('@/assets/spine/goblin/evil.json'
   + '?{ "scale": 0.7 }');
+ ```
+
+Choose skins that you want to use ("default" skin always resolved,
+if "scale" option passed). "Skins" option needs to avoid unused assets,
+but you still can use all skins.
+```javascript
+const config4 = require('@/assets/spine/goblin/goblins-pro.json'
+  + '?{ "scale": 0.5, "skins": ["goblingirl"] }');
  ```
 
 ### Output

@@ -1,6 +1,6 @@
 {
   "name": "spine-webpack-plugin",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "Anton Pavlov <aapavlov1994@gmail.com>",
   "license": "MIT",
   "keywords": [
@@ -11,7 +11,7 @@
     "sprite",
     "json"
   ],
-  "description": "This is the loader that returns json with specified animations and appropriate images paths inside",
+  "description": "Webpack Plugin and Loader for resolving spine-animations, scale their assets and creating sprites. Works with skins.",
   "repository": {
     "type": "git",
     "url": "git@github.com:aapavlov1994/spine-webpack-plugin.git"
@@ -25,14 +25,14 @@
     "lint": "eslint ./src --ext .js"
   },
   "devDependencies": {
-    "eslint": "^7.0.0",
+    "eslint": "^7.16.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-sonarjs": "^0.5.0"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=14.4.0"
   },
   "dependencies": {
     "find-cache-dir": "^3.3.1",

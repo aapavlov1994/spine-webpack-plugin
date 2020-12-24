@@ -40,10 +40,28 @@ module.exports = class SpineSpriteMapWebpackPlugin {
   }
 
   genSpriteFor(hash, scale, assets) {
+    // set uniq number for future sprite and map
     if (!this.spritesHashes.has(hash)) this.spritesHashes.set(hash, this.spritesHashes.size + 1);
+
+    // filter used assets and gen fake coordinates for unused
+    const resolvedAssets = {};
+    const emptyAssets = {};
+    Object.keys(assets).forEach((key) => {
+      if (assets[key] === false) {
+        emptyAssets[key] = {
+          width: 1,
+          height: 1,
+          x: 0,
+          y: 0,
+        };
+      } else resolvedAssets[key] = assets[key];
+    });
+
+    // gent sprite and map, then write them in cache dir
     return new Promise((resolve) => {
-      getScaledImagesAsBuffer(assets, scale).then((result) => {
+      getScaledImagesAsBuffer(resolvedAssets, scale).then((result) => {
         Spritesmith.run({ src: result }, (err, output) => {
+          Object.assign(output.coordinates, emptyAssets); // add fake coors to real
           const postfix = this.spritesHashes.get(hash);
           const spritePath = path.join(this.cacheCompilerDir, `sprite${postfix}.png`);
           const mapPath = path.join(this.cacheCompilerDir, `map${postfix}.js`);

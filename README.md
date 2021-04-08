@@ -24,9 +24,13 @@ look like (separate assets in "images" subdirs):
 
 ![img.png](readme_assets/structure.png)
 
-### Settings of loader
+### Settings of plugin
+You can specify padding between images for your spritemap (2px as default).
+```javascript
+plugins.push(new SpineSpriteWebpackPlugin({ padding: 5 }));
+```
 
-You no need to configure your plugin.
+### Settings of loader
 You will need to set options for your loader only.
 The best way to do that - using inline options.
 

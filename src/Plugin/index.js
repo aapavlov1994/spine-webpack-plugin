@@ -23,9 +23,13 @@ const writeFile = (pathTo, data) => (
     );
   })
 );
+const defaultParams = { padding: 2 };
 
 module.exports = class SpineSpriteMapWebpackPlugin {
-  constructor() {
+  constructor(params = {}) {
+    const mergedParams = { ...defaultParams, ...params };
+    this.padding = mergedParams.padding;
+
     this.spritesHashes = new Map();
   }
 
@@ -60,7 +64,7 @@ module.exports = class SpineSpriteMapWebpackPlugin {
     // gent sprite and map, then write them in cache dir
     return new Promise((resolve) => {
       getScaledImagesAsBuffer(resolvedAssets, scale).then((result) => {
-        Spritesmith.run({ src: result }, (err, output) => {
+        Spritesmith.run({ src: result, padding: this.padding }, (err, output) => {
           Object.assign(output.coordinates, emptyAssets); // add fake coors to real
           const postfix = this.spritesHashes.get(hash);
           const spritePath = path.join(this.cacheCompilerDir, `sprite${postfix}.png`);

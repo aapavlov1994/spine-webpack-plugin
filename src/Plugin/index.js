@@ -37,7 +37,10 @@ module.exports = class SpineSpriteMapWebpackPlugin {
     this.cacheCompilerDir = cacheThunk(compiler.name || compiler.options.name || '');
 
     compiler.hooks.thisCompilation.tap(pluginName, (compilation) => {
-      compilation.hooks.normalModuleLoader.tap(pluginName, (spineLoader) => {
+      const loader = compiler.webpack && compiler.webpack.NormalModule
+        ? compiler.webpack.NormalModule.getCompilationHooks(compilation).loader
+        : compilation.hooks.normalModuleLoader;
+      loader.tap(pluginName, (spineLoader) => {
         spineLoader[pluginName] = this; // eslint-disable-line no-param-reassign
       });
     });

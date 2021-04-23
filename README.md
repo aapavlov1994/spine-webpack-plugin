@@ -31,8 +31,7 @@ plugins.push(new SpineSpriteWebpackPlugin({ padding: 5 }));
 ```
 
 ### Settings of loader
-You will need to set options for your loader only.
-The best way to do that - using inline options.
+The best way to set options for your loader - using inline options.
 
 Set scale option. This allows you to resolve skeleton, his assets,
 scale them and final animation. 
